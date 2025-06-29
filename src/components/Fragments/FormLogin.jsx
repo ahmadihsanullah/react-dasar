@@ -2,11 +2,19 @@ import Button from "../Elements/Button"
 import InputForm from "../Elements/Input"
 
 const FormLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        window.location.href = "/products";
+    }
     return (
-         <form action="">
+         <form onSubmit={handleLogin}>
          <InputForm label="Email" type="email" placeholder="example@gmail.com" name="email"/>
          <InputForm label="Password" type="password" placeholder="****" name="password"/>
-         <Button>Login</Button>
+         <Button type="submit">Login</Button>
         </form>
     )
 }

@@ -31,12 +31,12 @@ const BodyCard = (props) => {
 }
 
 const FooterCard = (props) => {
-    const { price } = props
+    const { price, handleToAddCart } = props
     return (
         <div className="flex justify-between mt-2">
-            <div className="text-white text-xl">Rp. {price}</div>
+            <div className="text-white text-xl">Rp. {(price).toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</div>
             <div className="">
-                <Button>Beli</Button>
+                <Button onClick={handleToAddCart} >Beli</Button>
             </div>
         </div>
     )
