@@ -1,35 +1,34 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Button from "../components/Elements/Button"
 import CardProduct from "../components/Fragments/CardProduct"
+const products = [
+    {
+        id: 2,
+        name: "Kucing Oren 1 ",
+        description: "kucing oren nih bosss 1",
+        harga: 100000,
+        img: "./images/cat.jpg",
+        qty: 0
+    },
+    {
+        id: 3,
+        name: "Kucing Oren 2",
+        description: "kucing oren nih bosss 2",
+        harga: 100000,
+        img: "./images/cat.jpg",
+        qty: 0
+    },
+    {
+        id: 4,
+        name: "Kucing Oren 2",
+        description: "kucing oren nih bosss 2",
+        harga: 100000,
+        img: "./images/cat.jpg",
+        qty: 0
+    }
+]
 
 const ProductsPage = () => {
-    const products = [
-        {
-            id: 2,
-            name: "Kucing Oren 1 ",
-            description: "kucing oren nih bosss 1",
-            harga: 100000,
-            img: "./images/cat.jpg",
-            qty: 0
-        },
-        {
-            id: 3,
-            name: "Kucing Oren 2",
-            description: "kucing oren nih bosss 2",
-            harga: 100000,
-            img: "./images/cat.jpg",
-            qty: 0
-        },
-        {
-            id: 4,
-            name: "Kucing Oren 2",
-            description: "kucing oren nih bosss 2",
-            harga: 100000,
-            img: "./images/cat.jpg",
-            qty: 0
-        }
-    ]
-
     const email = localStorage.getItem("email");
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -70,8 +69,7 @@ const ProductsPage = () => {
         }
     }
 
-
-
+    // useref
     return (
         <Fragment>
             <div className="height-20 bg-blue-600 flex justify-end pr-5 text-white">
