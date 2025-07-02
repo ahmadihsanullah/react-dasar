@@ -1,26 +1,65 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Button from "../components/Elements/Button"
 import CardProduct from "../components/Fragments/CardProduct"
 
 const ProductsPage = () => {
-    const email = localStorage.getItem("email");
-    const [cart, setCart] = useState([
+    const products = [
         {
-            'id': 1,
-            'name': "Sepatu lama",
-            'description': "kucing oren nih bosss",
-            "harga": 100000,
-            'qty': 1,
+            id: 2,
+            name: "Kucing Oren 1 ",
+            description: "kucing oren nih bosss 1",
+            harga: 100000,
+            img: "./images/cat.jpg",
+            qty: 0
+        },
+        {
+            id: 3,
+            name: "Kucing Oren 2",
+            description: "kucing oren nih bosss 2",
+            harga: 100000,
+            img: "./images/cat.jpg",
+            qty: 0
+        },
+        {
+            id: 4,
+            name: "Kucing Oren 2",
+            description: "kucing oren nih bosss 2",
+            harga: 100000,
+            img: "./images/cat.jpg",
+            qty: 0
         }
-    ]);
+    ]
+
+    const email = localStorage.getItem("email");
+    const [cart, setCart] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    useEffect(() => {
+        setCart(JSON.parse(localStorage.getItem("cart")) || []);
+    }, [])
+
+    useEffect(() => {
+        if (cart.length > 0) {
+            const sum = cart.reduce((acc, item) => {
+                const product = products.find((product) => product.id === item.id);
+                if (!product) return acc; // abaikan jika produk tidak ditemukan
+                return acc + product.harga * item.qty;
+            }, 0);
+            setTotalPrice(sum);
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+    }, [cart])
+
     const handleLogout = () => {
         localStorage.removeItem("email");
         localStorage.removeItem("password");
+        localStorage.removeItem("cart");
         window.location.href = "/login";
     }
 
     const handleAddToCart = (id) => {
-        const product = products.find(p => p.id === id);
+        const product = products.find(product => product.id === id);
         const existingItem = cart.find(item => item.id === id);
         if (existingItem) {
             setCart(
@@ -31,29 +70,7 @@ const ProductsPage = () => {
         }
     }
 
-    const products = [
-        {
-            id: 2,
-            name: "Kucing Oren 1 ",
-            description: "kucing oren nih bosss 1",
-            harga: 100000,
-            img: "./images/cat.jpg"
-        },
-        {
-            id: 3,
-            name: "Kucing Oren 2",
-            description: "kucing oren nih bosss 2",
-            harga: 100000,
-            img: "./images/cat.jpg"
-        },
-        {
-            id: 4,
-            name: "Kucing Oren 2",
-            description: "kucing oren nih bosss 2",
-            harga: 100000,
-            img: "./images/cat.jpg"
-        }
-    ]
+
 
     return (
         <Fragment>
@@ -91,13 +108,16 @@ const ProductsPage = () => {
                                 return (
                                     <tr key={item.id}>
                                         <td>{item.name}</td>
-                                        <td>Rp . {item.harga}</td>
-                                        {/* <td>Rp. {item.harga.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}</td> */}
+                                        <td>{item.harga}</td>
                                         <td>{item.qty}</td>
                                         <td>{item.harga * item.qty}</td>
                                     </tr>
                                 )
                             })}
+                            <tr>
+                                <td colSpan={3}>Price</td>
+                                <td>{totalPrice}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
